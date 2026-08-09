@@ -1,718 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>成語填字</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet" />
+  <title>成語填字｜國中國文練習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --paper: #fbefd1;
-      --paper-deep: #ead29c;
-      --ink: #2f2319;
-      --muted: #806b54;
-      --seal: #b72f23;
-      --seal-soft: rgba(183, 47, 35, 0.14);
-      --wood: #d5a968;
-      --wood-dark: #865a2d;
-      --green: #2d8c60;
-      --gold: #c48b31;
-      --line: rgba(89, 57, 31, 0.2);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Noto Serif TC", serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 14% 16%, rgba(183, 47, 35, 0.12) 0 90px, transparent 92px),
-        radial-gradient(circle at 86% 12%, rgba(196, 139, 49, 0.14) 0 120px, transparent 122px),
-        linear-gradient(90deg, rgba(110, 74, 41, 0.04) 1px, transparent 1px) 0 0 / 28px 28px,
-        linear-gradient(0deg, rgba(110, 74, 41, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
-        linear-gradient(180deg, #fff9e8, var(--paper));
-    }
-
-    .map-link {
-      position: fixed;
-      top: 12px;
-      left: 12px;
-      z-index: 10;
-      padding: 9px 12px;
-      border-radius: 8px;
-      background: rgba(255, 249, 232, 0.95);
-      color: #5a3924;
-      border: 2px solid rgba(89, 57, 31, 0.2);
-      box-shadow: 0 4px 0 rgba(83, 53, 29, 0.12);
-      text-decoration: none;
-      font-weight: 900;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        radial-gradient(circle, rgba(101, 68, 39, 0.08) 0 1px, transparent 1.5px),
-        radial-gradient(circle, rgba(255, 255, 255, 0.38) 0 1px, transparent 1.5px);
-      background-position: 0 0, 9px 13px;
-      background-size: 22px 22px;
-      opacity: 0.55;
-      mix-blend-mode: multiply;
-    }
-
-    main {
-      position: relative;
-      width: min(1060px, 94vw);
-      margin: 0 auto;
-      padding: 26px 0 36px;
-    }
-
-    header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: end;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2.3rem, 6vw, 4.8rem);
-      line-height: 1;
-      color: #4c2f1f;
-      letter-spacing: 0;
-      text-shadow: 0 4px 0 rgba(255, 247, 221, 0.95);
-    }
-
-    .subtitle {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .status {
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-      gap: 8px;
-    }
-
-    .stat {
-      min-width: 104px;
-      padding: 10px 12px;
-      border: 2px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 249, 232, 0.88);
-      box-shadow: 0 5px 0 rgba(83, 53, 29, 0.12);
-      text-align: center;
-      font-weight: 900;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 3px;
-      color: var(--seal);
-      font-size: 1.5rem;
-    }
-
-    .scroll {
-      border: 3px solid rgba(111, 72, 40, 0.24);
-      border-radius: 8px;
-      background:
-        linear-gradient(90deg, rgba(140, 86, 45, 0.035) 1px, transparent 1px) 0 0 / 34px 34px,
-        rgba(255, 248, 228, 0.92);
-      box-shadow: 0 16px 34px rgba(73, 48, 24, 0.14);
-      padding: clamp(16px, 3vw, 28px);
-    }
-
-    .idiom-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(68px, 1fr));
-      gap: clamp(10px, 2vw, 18px);
-      max-width: 720px;
-      margin: 0 auto 18px;
-    }
-
-    .char-box,
-    .blank {
-      position: relative;
-      aspect-ratio: 1;
-      min-height: 72px;
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      font-size: clamp(2.2rem, 8vw, 4.8rem);
-      font-weight: 900;
-      background: rgba(255, 253, 244, 0.74);
-    }
-
-    .char-box {
-      border: 2px solid rgba(74, 48, 27, 0.2);
-      color: #1f1812;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
-    }
-
-    .blank {
-      border: 3px solid var(--seal);
-      color: var(--seal);
-      box-shadow: inset 0 0 0 1px rgba(183, 47, 35, 0.15), 0 5px 0 rgba(96, 50, 30, 0.08);
-      overflow: hidden;
-    }
-
-    .blank::before,
-    .blank::after,
-    .char-box::before,
-    .char-box::after {
-      content: "";
-      position: absolute;
-      background: rgba(183, 47, 35, 0.22);
-      pointer-events: none;
-    }
-
-    .blank::before,
-    .char-box::before {
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-    }
-
-    .blank::after,
-    .char-box::after {
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-    }
-
-    .char-box::before,
-    .char-box::after {
-      background: rgba(74, 48, 27, 0.12);
-    }
-
-    .blank.locked {
-      background: #fff5dd;
-      animation: stamp 260ms ease;
-    }
-
-    .blank.locked .placed-char {
-      color: var(--seal);
-      text-shadow: 0 2px 0 rgba(255, 227, 190, 0.9);
-    }
-
-    .blank.wrong {
-      animation: redFlash 200ms ease;
-    }
-
-    .placed-char {
-      position: relative;
-      z-index: 2;
-    }
-
-    .hint {
-      min-height: 42px;
-      margin: 0 auto 16px;
-      max-width: 760px;
-      padding: 10px 14px;
-      border: 2px solid var(--line);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.48);
-      color: var(--muted);
-      text-align: center;
-      font-weight: 900;
-    }
-
-    .hint.correct {
-      color: var(--green);
-      border-color: rgba(45, 140, 96, 0.32);
-      background: rgba(229, 248, 230, 0.72);
-    }
-
-    .card-bank {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .card {
-      min-height: 62px;
-      border: 2px solid rgba(108, 68, 34, 0.26);
-      border-radius: 8px;
-      background:
-        repeating-linear-gradient(90deg, rgba(255, 236, 188, 0.3) 0 6px, transparent 7px 18px),
-        linear-gradient(180deg, #fff0bf, #e2b36f);
-      color: #17110c;
-      cursor: grab;
-      font: inherit;
-      font-size: clamp(1.7rem, 5vw, 2.5rem);
-      font-weight: 900;
-      box-shadow: 0 5px 0 rgba(99, 61, 31, 0.2);
-      touch-action: none;
-      user-select: none;
-      transition: transform 130ms ease, opacity 130ms ease, border-color 130ms ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(183, 47, 35, 0.4);
-    }
-
-    .card.dragging {
-      opacity: 0.58;
-    }
-
-    .card.used {
-      opacity: 0.35;
-      cursor: default;
-      transform: none;
-    }
-
-    .card.ghost {
-      position: fixed;
-      z-index: 20;
-      width: 76px;
-      height: 76px;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(1.05);
-      box-shadow: 0 12px 28px rgba(65, 39, 20, 0.28);
-    }
-
-    .next-panel,
-    .result-panel {
-      display: none;
-      max-width: 760px;
-      margin: 18px auto 0;
-      padding: 18px;
-      border: 3px solid rgba(183, 47, 35, 0.22);
-      border-radius: 8px;
-      background: rgba(255, 242, 204, 0.9);
-      text-align: center;
-      box-shadow: 0 8px 0 rgba(100, 61, 31, 0.1);
-    }
-
-    .next-panel.show,
-    .result-panel.show {
-      display: block;
-    }
-
-    .answer-title {
-      margin: 0 0 8px;
-      color: var(--green);
-      font-size: 1.8rem;
-      font-weight: 900;
-    }
-
-    .meaning {
-      margin: 0 0 14px;
-      color: #5f4634;
-      font-weight: 700;
-      line-height: 1.7;
-    }
-
-    .action-button {
-      min-width: 150px;
-      min-height: 48px;
-      border: 0;
-      border-radius: 8px;
-      padding: 0 18px;
-      background: linear-gradient(180deg, #ca4438, #98281f);
-      color: #fff8e8;
-      box-shadow: 0 5px 0 #651a15;
-      cursor: pointer;
-      font: inherit;
-      font-weight: 900;
-    }
-
-    .action-button:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 0 #651a15;
-    }
-
-    .result-panel h2 {
-      margin: 0 0 10px;
-      color: #6d3d24;
-      font-size: 2rem;
-    }
-
-    .scoreline {
-      margin: 0 0 16px;
-      color: var(--seal);
-      font-size: 1.35rem;
-      font-weight: 900;
-    }
-
-    @keyframes stamp {
-      0% {
-        transform: scale(1.08) rotate(-2deg);
-      }
-      100% {
-        transform: scale(1) rotate(0deg);
-      }
-    }
-
-    @keyframes redFlash {
-      50% {
-        background: rgba(183, 47, 35, 0.22);
-        box-shadow: 0 0 0 8px rgba(183, 47, 35, 0.16);
-      }
-    }
-
-    @media (max-width: 720px) {
-      header {
-        grid-template-columns: 1fr;
-        align-items: stretch;
-      }
-
-      .status {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .card-bank {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 460px) {
-      .idiom-row {
-        grid-template-columns: repeat(4, minmax(54px, 1fr));
-      }
-
-      .char-box,
-      .blank {
-        min-height: 58px;
-      }
-
-      .card-bank {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
+    :root { --ink:#34261b; --paper:#fff7df; --seal:#af3027; --jade:#527266; --gold:#c79043; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); font-family:"Noto Serif TC",serif; background:#d6c29b url("assets/images/study-background.png") center/cover fixed; }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; background:rgba(52,35,19,.15); }
+    .game { position:relative; width:min(960px,94vw); margin:auto; padding:16px 0 36px; }
+    .top { display:grid; grid-template-columns:210px 1fr auto; gap:16px; align-items:center; }
+    .title { width:100%; filter:drop-shadow(0 5px 5px rgba(43,28,15,.2)); }
+    .instruction { margin:0; padding:10px 14px; border-radius:12px; background:rgba(255,248,227,.88); box-shadow:0 4px 12px #3d281426; font-weight:700; text-align:center; }
+    .stats { display:flex; gap:8px; }
+    .stat { min-width:78px; padding:8px 10px; border:2px solid #87644088; border-radius:10px; background:#fff9e9e8; text-align:center; font-size:.84rem; font-weight:900; box-shadow:0 3px 0 #79532b33; }
+    .stat b { display:block; color:var(--seal); font-size:1.35rem; }
+    .paper { position:relative; overflow:hidden; margin-top:14px; padding:clamp(18px,4vw,38px); border:3px solid #8d663a88; border-radius:20px; background:linear-gradient(110deg,#fff9e9eF,#f4e2b8f2); box-shadow:0 18px 40px #33200f55, inset 0 0 45px #9d71461c; }
+    .paper::before { content:""; position:absolute; inset:0; opacity:.08; pointer-events:none; background:repeating-linear-gradient(0deg,transparent 0 7px,#956635 8px 9px); }
+    .asset { position:absolute; width:220px; opacity:.31; pointer-events:none; mix-blend-mode:multiply; }
+    .asset.left { left:-82px; bottom:-78px; } .asset.right { right:-85px; top:-70px; transform:rotate(180deg); }
+    .content { position:relative; z-index:1; }
+    .idiom { display:grid; grid-template-columns:repeat(4,minmax(60px,118px)); justify-content:center; gap:clamp(9px,2vw,20px); margin:8px auto 18px; }
+    .square { position:relative; display:grid; place-items:center; aspect-ratio:1; border-radius:8px; background-color:#fffdf4; font-size:clamp(2.3rem,8vw,4.5rem); font-weight:900; box-shadow:inset 0 0 0 1px #fff,0 4px 7px #64431e22; overflow:hidden; }
+    .square::before,.square::after { content:""; position:absolute; background:#8d5c3840; } .square::before{ width:1px;height:100%; } .square::after{ width:100%;height:1px; }
+    .fixed { border:2px solid #8d6a4588; } .blank { border:3px solid var(--seal); cursor:pointer; color:var(--seal); transition:.18s; }
+    .blank:focus-visible,.card:focus-visible,.button:focus-visible { outline:4px solid #e4a33b; outline-offset:3px; }
+    .blank.target { box-shadow:0 0 0 6px #d88a3960; } .blank.locked { cursor:default; animation:pop .38s ease-out; }
+    .stamp { position:absolute; inset:6%; display:grid; place-items:center; border:4px double var(--seal); border-radius:50%; color:var(--seal); font-size:.62rem; font-weight:900; opacity:.82; transform:rotate(-13deg); pointer-events:none; }
+    .message { min-height:48px; max-width:670px; margin:0 auto 15px; padding:10px 14px; border:2px solid #87644055; border-radius:10px; background:#fffdf0c9; text-align:center; font-weight:900; } .message.good{ color:#286746; } .message.bad{ color:var(--seal); animation:shake .3s; }
+    .bank { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; max-width:680px; margin:auto; }
+    .card { min-height:64px; border:2px solid #9c7045; border-radius:7px; background:linear-gradient(135deg,#fffbed,#ecd49f); color:#332419; box-shadow:3px 4px 0 #81552644; cursor:grab; font:900 clamp(1.5rem,5vw,2.2rem) "Noto Serif TC",serif; transition:transform .15s,opacity .15s; touch-action:none; }
+    .card:hover{ transform:translateY(-3px) rotate(-1deg); } .card.selected{ border-color:var(--seal); outline:4px solid #d56a4433; transform:translateY(-4px); } .card.used{ opacity:.28; cursor:default; transform:none; }
+    .answer { display:none; max-width:680px; margin:20px auto 0; padding:18px; border:3px solid #b8773b88; border-radius:12px; background:#fff5d9f2; text-align:center; } .answer.show{ display:block; } .answer h2{ margin:0 0 8px; color:#2c694a; } .answer p{ margin:0 0 13px; line-height:1.75; font-weight:700; }
+    .button { border:0; border-radius:8px; padding:12px 22px; background:linear-gradient(#ca5547,#992b25); color:white; box-shadow:0 4px 0 #681b17; cursor:pointer; font:900 1rem "Noto Serif TC",serif; } .button:active{ transform:translateY(3px); box-shadow:0 1px 0 #681b17; }
+    @keyframes pop { 0%{transform:scale(.75) rotate(-8deg)} 70%{transform:scale(1.1) rotate(2deg)} } @keyframes shake { 25%{transform:translateX(-7px)} 75%{transform:translateX(7px)} }
+    @media(max-width:700px){ .top{grid-template-columns:130px 1fr;}.stats{grid-column:1/-1;justify-content:center}.instruction{font-size:.9rem}.bank{grid-template-columns:repeat(3,1fr)}.asset{width:160px}.paper{padding:18px 12px;} }
+    @media(max-width:390px){.top{grid-template-columns:105px 1fr;gap:8px}.instruction{padding:7px;font-size:.8rem}.square{font-size:2.1rem}.idiom{gap:7px}.card{min-height:55px}}
   </style>
 </head>
 <body>
-  <a class="map-link" href="../大冒險地圖/index.html">← 回到大地圖</a>
-  <main>
-    <header>
-      <div>
-        <h1>成語填字</h1>
-        <p class="subtitle">把下方字卡拖到紅色米字格，補完成語。</p>
-      </div>
-      <div class="status" aria-label="遊戲狀態">
-        <div class="stat">題目<span><span id="roundNow">1</span>/5</span></div>
-        <div class="stat">答對<span id="score">0</span></div>
-      </div>
+  <main class="game">
+    <header class="top">
+      <img class="title" src="assets/images/title-plaque.png" alt="成語填字" />
+      <p class="instruction">拖曳字卡到米字格，或先點字卡、再點空格。</p>
+      <div class="stats"><div class="stat">題次<b><span id="round">1</span> / 5</b></div><div class="stat">答對<b id="score">0</b></div></div>
     </header>
-
-    <section class="scroll">
-      <div class="idiom-row" id="idiomRow" aria-label="成語填字區"></div>
-      <div class="hint" id="hint">拖曳字卡到空格中。</div>
-      <div class="card-bank" id="cardBank" aria-label="字卡區"></div>
-
-      <div class="next-panel" id="nextPanel">
-        <p class="answer-title">✓ 答對！</p>
-        <p class="meaning" id="meaning"></p>
-        <button class="action-button" id="nextButton" type="button">下一題</button>
-      </div>
-
-      <div class="result-panel" id="resultPanel">
-        <h2>練習完成</h2>
-        <p class="scoreline" id="finalScore">總成績：0 / 5</p>
-        <button class="action-button" id="restartButton" type="button">重新挑戰</button>
+    <section class="paper" aria-live="polite">
+      <img class="asset left" src="assets/images/scholar-assets.png" alt="" aria-hidden="true"><img class="asset right" src="assets/images/scholar-assets.png" alt="" aria-hidden="true">
+      <div class="content">
+        <div class="idiom" id="idiom" aria-label="成語填字題目"></div>
+        <p id="message" class="message">請把合適的字卡放進紅色米字格。</p>
+        <div id="bank" class="bank" aria-label="字卡區"></div>
+        <section id="answer" class="answer"><h2 id="complete"></h2><p id="meaning"></p><button id="next" class="button" type="button">下一題</button></section>
       </div>
     </section>
   </main>
-
   <script>
-    const QUESTIONS = [
-      { 成語: "一鳴驚人", 缺字: [1, 2], 答案: ["鳴", "驚"], 意思: "比喻平時默默無聞，突然有驚人表現。" },
-      { 成語: "風花雪月", 缺字: [1, 3], 答案: ["花", "月"], 意思: "原指四時景色，後比喻浮華空洞的詩文。" },
-      { 成語: "三番五次", 缺字: [1, 3], 答案: ["番", "次"], 意思: "形容次數很多。" },
-      { 成語: "一字千金", 缺字: [1, 3], 答案: ["字", "金"], 意思: "形容文字價值極高。" },
-      { 成語: "畫龍點睛", 缺字: [1, 3], 答案: ["龍", "睛"], 意思: "比喻在關鍵處點明要旨，使內容更加生動有力。" },
-      { 成語: "井底之蛙", 缺字: [0, 3], 答案: ["井", "蛙"], 意思: "比喻見識狹小的人。" },
-      { 成語: "刻舟求劍", 缺字: [1, 3], 答案: ["舟", "劍"], 意思: "比喻拘泥成法，不知隨情勢變通。" },
-      { 成語: "亡羊補牢", 缺字: [1, 3], 答案: ["羊", "牢"], 意思: "比喻出了差錯後及時補救，還不算太晚。" },
-      { 成語: "守株待兔", 缺字: [1, 3], 答案: ["株", "兔"], 意思: "比喻死守狹隘經驗，不知變通。" },
-      { 成語: "掩耳盜鈴", 缺字: [1, 3], 答案: ["耳", "鈴"], 意思: "比喻自己欺騙自己。" },
-      { 成語: "杯弓蛇影", 缺字: [1, 2], 答案: ["弓", "蛇"], 意思: "比喻疑神疑鬼，自相驚擾。" },
-      { 成語: "對牛彈琴", 缺字: [1, 3], 答案: ["牛", "琴"], 意思: "比喻對不懂道理的人講道理，白費力氣。" }
+    const questions=[
+      {word:'一鳴驚人',holes:[1,3],answers:['鳴','人'],meaning:'比喻平時沒有特殊表現，一做事便有驚人的成績。'},
+      {word:'自相矛盾',holes:[1,3],answers:['相','盾'],meaning:'比喻說話或做事前後抵觸，不能一致。'},
+      {word:'畫龍點睛',holes:[1,3],answers:['龍','睛'],meaning:'比喻在關鍵處加上精采的一筆，使內容更加生動。'},
+      {word:'刻舟求劍',holes:[1,3],answers:['舟','劍'],meaning:'比喻拘泥成法、不知變通。'},
+      {word:'井底之蛙',holes:[1,3],answers:['底','蛙'],meaning:'比喻見識淺薄、眼界狹小的人。'},
+      {word:'守株待兔',holes:[1,3],answers:['株','兔'],meaning:'比喻妄想不勞而獲，或死守狹隘的經驗。'},
+      {word:'胸有成竹',holes:[1,3],answers:['有','竹'],meaning:'比喻做事前已有完整的計畫或把握。'},
+      {word:'亡羊補牢',holes:[1,3],answers:['羊','牢'],meaning:'比喻出了問題後及時補救，還不算太晚。'},
+      {word:'水落石出',holes:[1,3],answers:['落','出'],meaning:'比喻事情真相完全顯露。'},
+      {word:'柳暗花明',holes:[1,3],answers:['暗','明'],meaning:'比喻在困境中出現轉機，重新看到希望。'}
     ];
-
-    const DISTRACTORS = "天地山水日月風雨雲雷花草鳥魚龍馬虎犬竹松梅雪火石金玉書琴棋畫詩酒茶人心明暗春秋東西南北";
-    const GAME_SIZE = 5;
-
-    const idiomRow = document.querySelector("#idiomRow");
-    const cardBank = document.querySelector("#cardBank");
-    const hint = document.querySelector("#hint");
-    const roundNow = document.querySelector("#roundNow");
-    const scoreEl = document.querySelector("#score");
-    const nextPanel = document.querySelector("#nextPanel");
-    const nextButton = document.querySelector("#nextButton");
-    const meaning = document.querySelector("#meaning");
-    const resultPanel = document.querySelector("#resultPanel");
-    const finalScore = document.querySelector("#finalScore");
-    const restartButton = document.querySelector("#restartButton");
-
-    let gameQuestions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let filled = [];
-    let cards = [];
-    let audioContext = null;
-    let dragState = null;
-
-    nextButton.addEventListener("click", nextQuestion);
-    restartButton.addEventListener("click", startGame);
-    startGame();
-
-    function startGame() {
-      gameQuestions = shuffle([...QUESTIONS]).slice(0, GAME_SIZE);
-      currentIndex = 0;
-      score = 0;
-      resultPanel.classList.remove("show");
-      nextPanel.classList.remove("show");
-      renderQuestion();
+    const pool=[...'天地日月山川風雨雲海春夏秋冬東西南北大小多少高低遠近快慢好壞真假美醜前後左右來去開關明白紅綠青黃黑白'];
+    const $=s=>document.querySelector(s); let game=[],index=0,score=0,selected=null,drag=null;
+    function shuffle(a){return a.sort(()=>Math.random()-.5)}
+    function start(){game=shuffle([...questions]).slice(0,5);index=0;score=0;render()}
+    function render(){selected=null; const q=game[index];$('#round').textContent=index+1;$('#score').textContent=score;$('#answer').classList.remove('show'); $('#message').className='message';$('#message').textContent='請把合適的字卡放進紅色米字格。';
+      $('#idiom').innerHTML=[...q.word].map((c,i)=>{let h=q.holes.indexOf(i);return h<0?`<div class="square fixed">${c}</div>`:`<button class="square blank" data-hole="${h}" data-answer="${q.answers[h]}" aria-label="第 ${h+1} 個空格"></button>`}).join('');
+      const choices=shuffle([...q.answers,...shuffle(pool.filter(x=>!q.word.includes(x))).slice(0,8)]);$('#bank').innerHTML=choices.map((c,i)=>`<button class="card" data-char="${c}" data-id="${i}" draggable="true">${c}</button>`).join('');
+      document.querySelectorAll('.card').forEach(c=>{c.addEventListener('click',()=>choose(c));c.addEventListener('dragstart',e=>{drag=c;e.dataTransfer.setData('text/plain',c.dataset.char)});c.addEventListener('dragend',()=>drag=null)});
+      document.querySelectorAll('.blank').forEach(b=>{b.addEventListener('click',()=>{if(selected) place(selected,b)});b.addEventListener('dragover',e=>e.preventDefault());b.addEventListener('drop',e=>{e.preventDefault();if(drag)place(drag,b)})});
     }
-
-    function renderQuestion() {
-      const question = gameQuestions[currentIndex];
-      filled = Array(question.缺字.length).fill(null);
-      cards = buildCards(question);
-      roundNow.textContent = String(currentIndex + 1);
-      scoreEl.textContent = String(score);
-      hint.textContent = "拖曳字卡到空格中。";
-      hint.className = "hint";
-      nextPanel.classList.remove("show");
-      resultPanel.classList.remove("show");
-      renderIdiom(question);
-      renderCards();
-    }
-
-    function renderIdiom(question) {
-      idiomRow.innerHTML = "";
-      [...question.成語].forEach((char, index) => {
-        const blankIndex = question.缺字.indexOf(index);
-
-        if (blankIndex >= 0) {
-          const blank = document.createElement("div");
-          blank.className = "blank";
-          blank.dataset.blankIndex = String(blankIndex);
-          blank.dataset.answer = question.答案[blankIndex];
-          blank.textContent = "□";
-          idiomRow.appendChild(blank);
-        } else {
-          const box = document.createElement("div");
-          box.className = "char-box";
-          box.textContent = char;
-          idiomRow.appendChild(box);
-        }
-      });
-    }
-
-    function renderCards() {
-      cardBank.innerHTML = "";
-      cards.forEach((card) => {
-        const button = document.createElement("button");
-        button.className = "card";
-        button.type = "button";
-        button.textContent = card.char;
-        button.dataset.cardId = card.id;
-        button.dataset.char = card.char;
-        button.addEventListener("pointerdown", startDrag);
-
-        if (card.used) {
-          button.classList.add("used");
-          button.disabled = true;
-        }
-
-        cardBank.appendChild(button);
-      });
-    }
-
-    function buildCards(question) {
-      const answerCards = question.答案.map((char, index) => ({
-        id: `answer-${index}-${char}`,
-        char,
-        used: false
-      }));
-      const excluded = new Set([...question.成語, ...question.答案]);
-      const distractors = [...DISTRACTORS]
-        .filter((char) => !excluded.has(char))
-        .slice(0);
-      const chosen = shuffle(distractors).slice(0, 13).map((char, index) => ({
-        id: `distractor-${index}-${char}`,
-        char,
-        used: false
-      }));
-
-      return shuffle([...answerCards, ...chosen]);
-    }
-
-    function startDrag(event) {
-      const cardEl = event.currentTarget;
-      if (cardEl.disabled) return;
-
-      ensureAudio();
-      event.preventDefault();
-      const rect = cardEl.getBoundingClientRect();
-      const ghost = cardEl.cloneNode(true);
-      ghost.classList.add("ghost");
-      ghost.style.left = `${event.clientX}px`;
-      ghost.style.top = `${event.clientY}px`;
-      document.body.appendChild(ghost);
-      cardEl.classList.add("dragging");
-
-      dragState = {
-        cardEl,
-        ghost,
-        cardId: cardEl.dataset.cardId,
-        char: cardEl.dataset.char,
-        startLeft: rect.left,
-        startTop: rect.top
-      };
-
-      window.addEventListener("pointermove", moveDrag);
-      window.addEventListener("pointerup", endDrag);
-    }
-
-    function moveDrag(event) {
-      if (!dragState) return;
-      dragState.ghost.style.left = `${event.clientX}px`;
-      dragState.ghost.style.top = `${event.clientY}px`;
-    }
-
-    function endDrag(event) {
-      if (!dragState) return;
-
-      const target = document.elementFromPoint(event.clientX, event.clientY);
-      const blank = target ? target.closest(".blank") : null;
-      const card = cards.find((item) => item.id === dragState.cardId);
-
-      if (blank && !blank.classList.contains("locked")) {
-        const blankIndex = Number(blank.dataset.blankIndex);
-        if (dragState.char === blank.dataset.answer) {
-          filled[blankIndex] = dragState.char;
-          card.used = true;
-          lockBlank(blank, dragState.char);
-          playBell();
-          hint.textContent = "很好，這個字放對了！";
-          hint.className = "hint correct";
-          renderCards();
-          checkQuestionComplete();
-        } else {
-          rejectBlank(blank);
-        }
-      }
-
-      cleanupDrag();
-      window.removeEventListener("pointermove", moveDrag);
-      window.removeEventListener("pointerup", endDrag);
-    }
-
-    function lockBlank(blank, char) {
-      blank.classList.add("locked");
-      blank.innerHTML = `<span class="placed-char">${char}</span>`;
-    }
-
-    function rejectBlank(blank) {
-      blank.classList.remove("wrong");
-      void blank.offsetWidth;
-      blank.classList.add("wrong");
-      setTimeout(() => blank.classList.remove("wrong"), 220);
-      playWrong();
-      hint.textContent = "這個字不對，請換一張字卡試試。";
-      hint.className = "hint";
-    }
-
-    function cleanupDrag() {
-      dragState.cardEl.classList.remove("dragging");
-      dragState.ghost.remove();
-      dragState = null;
-    }
-
-    function checkQuestionComplete() {
-      if (filled.every(Boolean)) {
-        const question = gameQuestions[currentIndex];
-        score += 1;
-        scoreEl.textContent = String(score);
-        meaning.textContent = question.意思;
-        nextButton.textContent = currentIndex === GAME_SIZE - 1 ? "看總成績" : "下一題";
-        nextPanel.classList.add("show");
-      }
-    }
-
-    function nextQuestion() {
-      currentIndex += 1;
-      if (currentIndex >= GAME_SIZE) {
-        showResult();
-      } else {
-        renderQuestion();
-      }
-    }
-
-    function showResult() {
-      localStorage.setItem("cert_idiom", "true");
-      nextPanel.classList.remove("show");
-      resultPanel.classList.add("show");
-      finalScore.textContent = `總成績：${score} / ${GAME_SIZE}`;
-      hint.textContent = "完成本輪練習。";
-      cardBank.innerHTML = "";
-      idiomRow.innerHTML = "";
-    }
-
-    function shuffle(items) {
-      for (let i = items.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [items[i], items[j]] = [items[j], items[i]];
-      }
-      return items;
-    }
-
-    function ensureAudio() {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioContext.state === "suspended") {
-        audioContext.resume();
-      }
-    }
-
-    function tone(frequency, duration, type = "sine", volume = 0.08, delay = 0) {
-      if (!audioContext) return;
-
-      const start = audioContext.currentTime + delay;
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      osc.type = type;
-      osc.frequency.setValueAtTime(frequency, start);
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(volume, start + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      osc.connect(gain);
-      gain.connect(audioContext.destination);
-      osc.start(start);
-      osc.stop(start + duration + 0.03);
-    }
-
-    function playBell() {
-      ensureAudio();
-      tone(740, 0.12, "sine", 0.07);
-      tone(990, 0.14, "triangle", 0.055, 0.07);
-    }
-
-    function playWrong() {
-      ensureAudio();
-      tone(240, 0.12, "sawtooth", 0.045);
-      tone(170, 0.12, "sawtooth", 0.04, 0.08);
-    }
+    function choose(card){if(card.disabled)return; document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));selected=card;card.classList.add('selected');document.querySelectorAll('.blank:not(.locked)').forEach(b=>b.classList.add('target'));$('#message').textContent=`已選「${card.dataset.char}」，請點選要填入的空格。`}
+    function place(card,blank){if(blank.classList.contains('locked'))return; document.querySelectorAll('.blank').forEach(b=>b.classList.remove('target')); if(card.dataset.char!==blank.dataset.answer){$('#message').textContent='這個字不對喔，字卡已退回，請再想一想！';$('#message').className='message bad';selected=null;document.querySelectorAll('.card').forEach(c=>c.classList.remove('selected'));return}
+      blank.classList.add('locked');blank.innerHTML=`<span>${card.dataset.char}</span><i class="stamp">答對</i>`;card.disabled=true;card.classList.remove('selected');card.classList.add('used');selected=null;$('#message').textContent='答對了！紅印章已蓋下。';$('#message').className='message good'; if(document.querySelectorAll('.blank.locked').length===2)done(); }
+    function done(){const q=game[index];score++;$('#score').textContent=score;$('#complete').textContent=`完成！「${q.word}」`;$('#meaning').textContent=q.meaning;$('#next').textContent=index===4?'查看成績':'下一題';$('#answer').classList.add('show');}
+    $('#next').addEventListener('click',()=>{index++;if(index<5)render();else result()});
+    function result(){$('#idiom').innerHTML='';$('#bank').innerHTML='';$('#message').className='message good';$('#message').textContent='本次練習完成，繼續加油！';$('#complete').textContent='練習完成';$('#meaning').textContent=`你答對了 ${score} / 5 題。再玩一次，會抽到不同的五題喔！`;$('#next').textContent='重新開始';$('#next').onclick=start;$('#answer').classList.add('show')}
+    start();
   </script>
 </body>
 </html>

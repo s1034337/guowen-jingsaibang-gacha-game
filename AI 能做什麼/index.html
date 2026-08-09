@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="認識 Codex 桌面版：老師的 AI 協作夥伴" />
+  <title>AI 能做什麼｜認識 Codex</title>
+  <style>
+    :root { --bg:#161516; --panel:#222022; --panel2:#2b2828; --line:#413a35; --ink:#f6f0e8; --muted:#c6bcb0; --orange:#ffb05b; --coral:#fa795f; --mint:#9bd5b6; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:radial-gradient(circle at 85% 5%,#403027 0,transparent 29rem),var(--bg); color:var(--ink); font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif; line-height:1.7; }
+    .wrap { width:min(1100px,calc(100% - 40px)); margin:auto; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding:22px 0; font-size:.94rem; }
+    .brand { font-weight:800; color:var(--orange); letter-spacing:.06em; } nav a { color:var(--muted); text-decoration:none; margin-left:18px; } nav a:hover { color:var(--orange); }
+    header { min-height:540px; display:grid; grid-template-columns:1.2fr .8fr; gap:48px; align-items:center; padding:48px 0 82px; }
+    .eyebrow { color:var(--orange); font-weight:700; letter-spacing:.12em; font-size:.9rem; }
+    h1 { font-size:clamp(3rem,7vw,5.7rem); line-height:1.08; margin:12px 0 22px; letter-spacing:-.06em; } h1 em { color:var(--orange); font-style:normal; }
+    .lead { max-width:650px; color:var(--muted); font-size:1.15rem; }
+    .pill { display:inline-block; padding:7px 14px; border:1px solid #725237; border-radius:99px; color:#ffd29d; background:#33261e; font-size:.9rem; }
+    .hero-card { position:relative; border:1px solid #654b37; border-radius:28px; padding:36px; background:linear-gradient(145deg,#342a25,#211f20 70%); box-shadow:15px 18px 0 #0e0d0e; transform:rotate(2deg); }
+    .spark { font-size:4rem; line-height:1; } .hero-card h2 { font-size:1.5rem; margin:16px 0 6px; } .hero-card p { color:var(--muted); margin:0; }
+    section { padding:76px 0; border-top:1px solid var(--line); } .section-label { color:var(--orange); font-weight:800; letter-spacing:.1em; font-size:.85rem; } h2 { font-size:clamp(1.8rem,4vw,2.8rem); line-height:1.25; margin:8px 0 28px; } .intro { color:var(--muted); max-width:760px; }
+    .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; } .card { border:1px solid var(--line); border-radius:18px; padding:24px; background:linear-gradient(130deg,var(--panel),#1d1b1c); } .card:hover { border-color:#966b40; transform:translateY(-3px); transition:.2s; }
+    .icon { display:inline-grid; place-items:center; width:42px; height:42px; background:#3b2d22; border-radius:12px; font-size:1.35rem; } h3 { font-size:1.13rem; margin:13px 0 7px; } .card p { color:var(--muted); margin:0 0 12px; font-size:.96rem; } .example { color:var(--mint); font-size:.9rem; border-top:1px dashed #50483f; padding-top:12px; }
+    .feature-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; } .feature { background:var(--panel2); border-radius:16px; padding:21px 18px; border-top:3px solid var(--coral); } .feature:nth-child(2){border-color:var(--orange)} .feature:nth-child(3){border-color:var(--mint)} .feature:nth-child(4){border-color:#c5a7e8} .feature strong { display:block; margin:8px 0; font-size:1.1rem; } .feature span { color:var(--muted); font-size:.92rem; }
+    .tips { display:grid; grid-template-columns:1fr 1fr; gap:22px; } .tip-box { padding:25px; border-radius:18px; } .do { background:#223329; border:1px solid #416e50; } .dont { background:#382626; border:1px solid #794747; } .tip-box h3 { margin:0 0 13px; } ul { padding-left:1.25em; margin:0; } li { margin:9px 0; } .do li::marker { color:var(--mint); } .dont li::marker { color:var(--coral); }
+    footer { text-align:center; color:#9f958c; padding:36px 0 50px; font-size:.9rem; } .cta { color:var(--orange); font-weight:700; }
+    @media (max-width:760px) { header { grid-template-columns:1fr; gap:26px; min-height:auto; } .hero-card { transform:none; } .grid,.tips { grid-template-columns:1fr; } .feature-grid { grid-template-columns:1fr 1fr; } nav a { display:none; } section { padding:55px 0; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav><span class="brand">CODEX × TEACHING</span><span><a href="#can-do">我能做什麼</a><a href="#features">內建功能</a><a href="#tips">怎麼問我</a></span></nav>
+    <header>
+      <div><span class="pill">你的 AI 協作夥伴</span><div class="eyebrow" style="margin-top:22px">HELLO, 我是 CODEX</div><h1>把想法變成<br><em>好用的教學力</em></h1><p class="lead">我是 Codex 桌面版，一位能和你一起思考、寫作、設計、整理與製作小工具的 AI。你說目標，我幫你把教學現場那些繁瑣的事，化成更清楚、更快開始的下一步。</p></div>
+      <aside class="hero-card"><div class="spark">✦</div><h2>不只回答問題</h2><p>我也能在你的專案資料夾中建立教材、網頁小遊戲、文件與可用的範本；需要時還能陪你修改到適合學生的樣子。</p></aside>
+    </header>
+
+    <section id="can-do"><div class="section-label">01 / 日常教學支援</div><h2>你想得到的工作，我都能一起完成。</h2><p class="intro">從備課前的發想到下課後的溝通，告訴我年級、科目、目的與限制，我會依情境產出可調整的初稿。</p>
+      <div class="grid">
+        <article class="card"><div class="icon">📝</div><h3>命題、評量與批改協助</h3><p>設計題目、答案、配分規準、題組與不同難度的版本。</p><div class="example">老師情境：依國二國文〈背影〉出一份 40 分鐘閱讀測驗，附詳解與鑑別度分層。</div></article>
+        <article class="card"><div class="icon">📚</div><h3>備課與教材製作</h3><p>整理重點、設計教案、學習單、簡報大綱與差異化任務。</p><div class="example">老師情境：把「酸鹼」概念做成三站輪替活動，給不同程度學生各一張任務卡。</div></article>
+        <article class="card"><div class="icon">🎮</div><h3>互動網頁與教學小工具</h3><p>建立可直接開啟的配對、闖關、抽籤、計分或練習網頁。</p><div class="example">老師情境：做一個班級成語賓果小遊戲，投影後可由全班輪流作答。</div></article>
+        <article class="card"><div class="icon">🏫</div><h3>班級經營</h3><p>規劃班規、獎勵制度、值日分工、班會討論題與衝突對話稿。</p><div class="example">老師情境：設計一套「安靜閱讀月」集點規則，兼顧公平、透明與學生自主。</div></article>
+        <article class="card"><div class="icon">💬</div><h3>親師生溝通</h3><p>撰寫通知、聯絡簿文字、家長回覆、鼓勵語與敏感議題的溝通草稿。</p><div class="example">老師情境：用溫和、不指責的語氣，通知家長孩子本週三次未交作業並提出合作方式。</div></article>
+        <article class="card"><div class="icon">📊</div><h3>資料整理與行政效率</h3><p>彙整表格、分析回饋、撰寫會議紀錄、規劃活動與建立範本。</p><div class="example">老師情境：將期中考錯題依單元分類，找出班級最需要複習的三個概念。</div></article>
+      </div>
+    </section>
+
+    <section id="features"><div class="section-label">02 / 內建功能</div><h2>需要不同形式的成果，也有對應的幫手。</h2>
+      <div class="feature-grid">
+        <div class="feature"><div class="icon">🎨</div><strong>畫圖</strong><span>製作原創圖片與插圖。<br>例：為低年級「節氣」學習單畫一組可愛角色圖卡。</span></div>
+        <div class="feature"><div class="icon">⏰</div><strong>Automations 排程</strong><span>建立提醒、定期追蹤與自動化任務。<br>例：每週五提醒你整理下週聯絡簿與教材清單。</span></div>
+        <div class="feature"><div class="icon">🧠</div><strong>Skills</strong><span>套用專門流程來處理文件、簡報、試算表等。<br>例：把班級問卷結果整理成有圖表的家長說明檔。</span></div>
+        <div class="feature"><div class="icon">🧩</div><strong>Plugins 外掛</strong><span>連接更多你使用的服務與工具。<br>例：串接雲端資料，協助整理教學資源或團隊任務。</span></div>
+      </div>
+    </section>
+
+    <section id="tips"><div class="section-label">03 / 和我合作的小祕訣</div><h2>說得越具體，答案越貼近你的教室。</h2>
+      <div class="tips"><div class="tip-box do"><h3>✅ 可以這樣說（Do）</h3><ul><li>說明對象：「給國小五年級、25 人使用」。</li><li>交代目標：「想讓學生分辨事實與意見」。</li><li>給我條件：「活動 20 分鐘、不要用手機」。</li><li>指定形式：「請做成可列印的 A4 學習單」。</li><li>請我調整：「語氣更活潑，題目再簡單一點」。</li></ul></div>
+      <div class="tip-box dont"><h3>⚠️ 盡量避免（Don't）</h3><ul><li>只說「幫我做教材」卻沒有科目或主題。</li><li>一次丟太多彼此無關的任務，卻沒有優先順序。</li><li>假設我知道你班級的特殊情況，卻沒有先說明。</li><li>未檢查就直接使用產出內容；尤其是事實、答案與個資。</li><li>只問「好不好？」；改說你想改善哪一點會更有效。</li></ul></div></div>
+    </section>
+    <footer>準備好了嗎？對我說一句：<span class="cta">「我想為＿＿年級做一個＿＿教材，時間約＿＿分鐘。」</span></footer>
+  </div>
+</body>
+</html>
