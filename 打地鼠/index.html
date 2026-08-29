@@ -44,7 +44,18 @@ questions.splice(0,questions.length,
 );
 idiomPool=questions.map(item=>item.answer);
 const roundTwo=questions.map(item=>({...item}));
-const roundThree=questions.map(item=>({...item}));
+const roundThree=[
+  {question:"本指在酒宴上解除將領的兵權。泛指輕而易舉地解除將領的兵權。",answer:"杯酒釋兵權",explanation:"宋太祖趙匡胤以酒宴勸說將領交出兵權；後來比喻輕易地解除將領兵權。"},
+  {question:"比喻處理小事，毋需大才。",answer:"割雞焉用牛刀",explanation:"殺雞何必使用宰牛的大刀？比喻處理小事不需要動用大才或大力量。"},
+  {question:"比喻求官或求名利的便捷途徑。",answer:"終南捷徑",explanation:"有人隱居終南山以博取名聲、求得官位；後來指追求名利的方便途徑。"},
+  {question:"比喻為難、牽制。",answer:"掣肘",explanation:"拉住手肘會使人行動不便，因此「掣肘」比喻受到牽制或阻礙。"},
+  {question:"不深入險境，就不能達到目標。",answer:"不入虎穴，焉得虎子",explanation:"不進入老虎的洞穴，怎能得到小老虎？比喻不冒險就無法取得成果。"},
+  {question:"比喻以空想來安慰自己。",answer:"望梅止渴",explanation:"曹操用前方有梅林的說法，讓口渴的士兵想到酸梅而暫時止渴；比喻用空想安慰自己。"},
+  {question:"當初遲到要請客的規定是你堅持定的，今天你無故遲到，那就（　　）吧！",answer:"請君入甕",explanation:"武則天命人用來對付周興的方法反過來對付周興；比喻用對方的方法來對付對方。"},
+  {question:"公司的銷售高手有著（　　），業績總是名列全國前三。",answer:"三寸之舌",explanation:"舌頭只有三寸，卻能說服人；比喻能言善辯的口才。"},
+  {question:"經理每天上班有一半的時間都在看股票，簡直（　　），讓人氣憤。",answer:"尸位素餐",explanation:"占著職位卻不做事，只白白領取俸祿；比喻占著職位不盡責任。"},
+  {question:"財團壟斷市場，操控物價，企圖（　　），這種行徑毫無公平可言。",answer:"一手遮天",explanation:"一隻手想把天空遮住；比喻仗著權勢，玩弄手段，掩蓋真相或胡作非為。"}
+];
 const rounds={1:{name:"第壹篇第一單元〈帝王故事〉",questions:roundOne},2:{name:"第壹篇第二單元〈施政方法〉",questions:roundTwo},3:{name:"第壹篇第三單元〈心機手段〉",questions:roundThree}};
 const $=s=>document.querySelector(s),board=$("#board"),scoreEl=$("#score"),progressEl=$("#progress"),timerEl=$("#timer"),timeLabel=$("#timeLabel"),questionEl=$("#question"),feedback=$("#feedback"),start=$("#start"),overlay=$("#overlay"),resultText=$("#resultText"),resultTitle=$("#resultTitle"),musicButton=$("#musicButton"),scopeText=$("#scopeText"),roundButtons=[...document.querySelectorAll(".round-button")];let deck=[],index=0,score=0,time=0,timer,playing=false,locked=false,holes=[],audioContext=null,musicTimer=null,musicStep=0,musicEnabled=true,selectedRound=2;const shuffle=a=>{const result=[...a];for(let i=result.length-1;i>0;i-=1){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result};
 for(let i=0;i<9;i++){const h=document.createElement("button");h.className="hole";h.type="button";h.innerHTML='<span class="mole-wrap"><span class="answer"></span><img src="assets/guinea-pig-car-v2.png" alt="可愛的天竺鼠小車"></span>';h.addEventListener("click",()=>choose(h));board.append(h);holes.push(h)}
