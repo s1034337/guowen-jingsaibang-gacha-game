@@ -9,6 +9,7 @@
     /* 新角色畫布較高，放大並上移以使小車完整探出洞口。 */
     .mole-wrap img{transform:translateY(-10%) scale(1.32)}
     .instruction{font-size:clamp(.85rem,2.5vw,1.05rem);font-weight:700}
+    .teacher-signature{margin:-12px auto 9px;text-align:center;color:rgba(255,255,255,.78);font-size:.82rem;font-weight:700;letter-spacing:.16em;text-shadow:0 1px 3px rgba(86,52,112,.28)}
     body{background:#eadbff url("assets/pastel-felt-meadow.png") center/cover fixed no-repeat}
     .board{background-color:rgba(127,190,128,.9)}.question-card,.stat{background:rgba(255,250,236,.94)}.music-button{display:block;margin:-8px auto 12px;padding:7px 13px;border:2px solid #9767a9;border-radius:999px;background:#fff6fd;color:#714884;font:800 .9rem inherit;cursor:pointer}
     /* 出題後的角色與答案卡固定顯示在洞口前方，避免被洞口前緣遮住。 */
@@ -18,7 +19,7 @@
   </style>
 </head>
 <body><main>
-  <h1>讀文史知典故配對練習</h1><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button></section>
+  <h1>讀文史知典故配對練習</h1><div class="teacher-signature">阿禎老師</div><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button></section>
   <section class="hud" aria-label="遊戲狀態"><div class="stat">分數<b id="score">0</b></div><div class="stat">題數<b id="progress">0 / 10</b></div><div class="stat"><span id="timeLabel">挑戰秒數</span><b id="timer">0</b></div></section>
   <section class="question-card"><div class="question-label">題目</div><div id="question"><span class="instruction">打地鼠作答說明：看清題目後，點選有正確答案；答錯會顯示解析，並從第一題重新挑戰。</span></div></section>
   <button id="start" class="start" type="button" onclick="begin()" style="font-size:clamp(1.45rem,5vw,2rem);padding:16px 42px;letter-spacing:.08em">開始挑戰！</button>
