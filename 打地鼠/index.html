@@ -19,7 +19,7 @@
   </style>
 </head>
 <body><main>
-  <h1>讀文史知典故配對練習</h1><div class="teacher-signature">阿禎老師</div><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button></section>
+  <h1>讀文史知典故配對練習</h1><div class="teacher-signature">阿禎老師</div><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button><button class="round-button" type="button" data-round="4">第四回：當前局勢</button></section>
   <section class="hud" aria-label="遊戲狀態"><div class="stat">分數<b id="score">0</b></div><div class="stat">題數<b id="progress">0 / 10</b></div><div class="stat"><span id="timeLabel">挑戰秒數</span><b id="timer">0</b></div></section>
   <section class="question-card"><div class="question-label">題目</div><div id="question"><span class="instruction">打地鼠作答說明：看清題目後，點選有正確答案；答錯會顯示解析，並從第一題重新挑戰。</span></div></section>
   <button id="start" class="start" type="button" onclick="begin()" style="font-size:clamp(1.45rem,5vw,2rem);padding:16px 42px;letter-spacing:.08em">開始挑戰！</button>
@@ -57,7 +57,19 @@ const roundThree=[
   {question:"經理每天上班有一半的時間都在看股票，簡直（　　），讓人氣憤。",answer:"尸位素餐",explanation:"占著職位卻不做事，只白白領取俸祿；比喻占著職位不盡責任。"},
   {question:"財團壟斷市場，操控物價，企圖（　　），這種行徑毫無公平可言。",answer:"一手遮天",explanation:"一隻手想把天空遮住；比喻仗著權勢，玩弄手段，掩蓋真相或胡作非為。"}
 ];
-const rounds={1:{name:"第壹篇第一單元〈帝王故事〉",questions:roundOne},2:{name:"第壹篇第二單元〈施政方法〉",questions:roundTwo},3:{name:"第壹篇第三單元〈心機手段〉",questions:roundThree}};
+const roundFour=[
+  {question:"比喻懷念故國或感時傷國的悲憤心情。",answer:"新亭對泣",explanation:"晉朝士人在新亭相對哭泣，感傷國土淪陷；後來比喻懷念故國或憂國傷時。"},
+  {question:"比喻任職不能長久者。",answer:"五日京兆",explanation:"京兆尹張敞任期將滿五日，仍整飭屬下；後來比喻任職時間短暫，不能久任。"},
+  {question:"比喻陰謀敗露，將被懲治。",answer:"東窗事發",explanation:"傳說秦檜與妻子在東窗下密謀害岳飛，後來陰謀敗露；比喻壞事或陰謀被揭發。"},
+  {question:"比喻為不存在的事情枉自驚恐。",answer:"杯弓蛇影",explanation:"有人把杯中弓的倒影誤認為蛇而生病；比喻因疑神疑鬼而自我驚嚇。"},
+  {question:"比喻緊張、恐懼，疑神疑鬼。",answer:"草木皆兵",explanation:"苻堅在淝水之戰前，將山上的草木都看成敵兵；形容人極度緊張恐懼。"},
+  {question:"比喻所處環境艱難困頓，危急無援。",answer:"四面楚歌",explanation:"項羽被漢軍包圍，夜裡聽到四面傳來楚歌；比喻陷入孤立無援的困境。"},
+  {question:"在電玩遊戲裡我的血量快見底了，簡直是（　　），隨時可能被秒殺。",answer:"窮途末路",explanation:"走到窮盡的道路與末端，沒有出路；比喻陷入絕境。"},
+  {question:"辯論比賽上，兩所學校實力（　　），誰也不讓誰，一時之間難分勝負。",answer:"旗鼓相當",explanation:"兩軍旗幟與戰鼓聲勢相同；比喻雙方實力不相上下。"},
+  {question:"小偷被當場抓住，嚇得（　　），不敢辯解一句。",answer:"噤若寒蟬",explanation:"像深秋的寒蟬一樣不出聲；形容因害怕而不敢說話。"},
+  {question:"幸好有醫生的妙手回春，病人（　　），恢復健康。",answer:"化險為夷",explanation:"把危險轉變為平安；比喻轉危為安。"}
+];
+const rounds={1:{name:"第壹篇第一單元〈帝王故事〉",questions:roundOne},2:{name:"第壹篇第二單元〈施政方法〉",questions:roundTwo},3:{name:"第壹篇第三單元〈心機手段〉",questions:roundThree},4:{name:"第壹篇第四單元〈當前局勢〉",questions:roundFour}};
 const $=s=>document.querySelector(s),board=$("#board"),scoreEl=$("#score"),progressEl=$("#progress"),timerEl=$("#timer"),timeLabel=$("#timeLabel"),questionEl=$("#question"),feedback=$("#feedback"),start=$("#start"),overlay=$("#overlay"),resultText=$("#resultText"),resultTitle=$("#resultTitle"),musicButton=$("#musicButton"),scopeText=$("#scopeText"),roundButtons=[...document.querySelectorAll(".round-button")];let deck=[],index=0,score=0,time=0,timer,playing=false,locked=false,holes=[],audioContext=null,musicTimer=null,musicStep=0,musicEnabled=true,selectedRound=2;const shuffle=a=>{const result=[...a];for(let i=result.length-1;i>0;i-=1){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result};
 for(let i=0;i<9;i++){const h=document.createElement("button");h.className="hole";h.type="button";h.innerHTML='<span class="mole-wrap"><span class="answer"></span><img src="assets/guinea-pig-car-v2.png" alt="可愛的天竺鼠小車"></span>';h.addEventListener("click",()=>choose(h));board.append(h);holes.push(h)}
 function begin(){startMusic();const selected=rounds[selectedRound];deck=shuffle(selected.questions);idiomPool=selected.questions.map(item=>item.answer);index=0;score=0;time=0;playing=true;locked=false;timeLabel.textContent="挑戰秒數";overlay.classList.remove("show");start.hidden=true;feedback.textContent="";update();showQuestion();clearInterval(timer);timer=setInterval(()=>{time++;update()},1000)}
