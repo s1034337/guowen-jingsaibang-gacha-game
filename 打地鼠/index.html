@@ -19,7 +19,7 @@
   </style>
 </head>
 <body><main>
-  <h1>讀文史知典故配對練習</h1><div class="teacher-signature">阿禎老師</div><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button><button class="round-button" type="button" data-round="4">第四回：當前局勢</button><button class="round-button" type="button" data-round="5">第五回：戰爭情勢</button></section>
+  <h1>讀文史知典故配對練習</h1><div class="teacher-signature">阿禎老師</div><button id="musicButton" class="music-button" type="button">音樂：開</button><p class="how" id="scopeText">考題範圍：第壹篇第二單元〈施政方法〉</p><section class="round-options" aria-label="選擇挑戰回次"><button class="round-button" type="button" data-round="1">第一回：帝王故事</button><button class="round-button active" type="button" data-round="2">第二回：施政方法</button><button class="round-button" type="button" data-round="3">第三回：心機手段</button><button class="round-button" type="button" data-round="4">第四回：當前局勢</button><button class="round-button" type="button" data-round="5">第五回：戰爭情勢</button><button class="round-button" type="button" data-round="6">第六回：謀略計策</button></section>
   <section class="hud" aria-label="遊戲狀態"><div class="stat">分數<b id="score">0</b></div><div class="stat">題數<b id="progress">0 / 10</b></div><div class="stat"><span id="timeLabel">挑戰秒數</span><b id="timer">0</b></div></section>
   <section class="question-card"><div class="question-label">題目</div><div id="question"><span class="instruction">打地鼠作答說明：看清題目後，點選有正確答案；答錯會顯示解析，並從第一題重新挑戰。</span></div></section>
   <button id="start" class="start" type="button" onclick="begin()" style="font-size:clamp(1.45rem,5vw,2rem);padding:16px 42px;letter-spacing:.08em">開始挑戰！</button>
@@ -81,7 +81,19 @@ const roundFive=[
   {question:"趁著休假，他（　　）把屋子裡裡外外徹底打掃了一番。",answer:"一鼓作氣",explanation:"擂第一通鼓時士氣最旺；比喻趁著旺盛的勁頭，一口氣把事情完成。"},
   {question:"他知道對方實力強大，於是選擇（　　），保全自己。",answer:"退避三舍",explanation:"春秋時晉文公信守承諾，將軍隊後退三舍；後來比喻主動退讓，不與人爭。"}
 ];
-const rounds={1:{name:"第壹篇第一單元〈帝王故事〉",questions:roundOne},2:{name:"第壹篇第二單元〈施政方法〉",questions:roundTwo},3:{name:"第壹篇第三單元〈心機手段〉",questions:roundThree},4:{name:"第壹篇第四單元〈當前局勢〉",questions:roundFour},5:{name:"第壹篇第五單元〈戰爭情勢〉",questions:roundFive}};
+const roundSix=[
+  {question:"指在表面事物之下隱蔽了另外的意圖。",answer:"項莊舞劍",explanation:"鴻門宴上項莊舞劍，真正目的在刺殺劉邦；比喻表面有一個行動，暗中另有目的。"},
+  {question:"指不懷好意、居心不良的宴會。",answer:"鴻門宴",explanation:"項羽設宴邀請劉邦，暗藏殺機；後來用來比喻不懷好意、居心不良的邀約或宴會。"},
+  {question:"指善用策略，使對方服氣。",answer:"七擒七縱",explanation:"諸葛亮七次擒獲、又七次釋放孟獲，終使孟獲真心歸服；比喻運用策略使人心服。"},
+  {question:"比喻出其不意、從旁突擊的戰略。",answer:"暗度陳倉",explanation:"劉邦表面修築棧道，暗中卻從陳倉進軍；比喻暗中採取行動，出其不意地取勝。"},
+  {question:"比喻辦一件事，一切都準備好了，就缺最後的關鍵條件。",answer:"萬事俱備，只欠東風",explanation:"赤壁之戰中，周瑜準備妥當，只等東風助燃火攻；比喻一切準備完成，只差最後一項重要條件。"},
+  {question:"比喻潛入敵國做破壞工作的人或物。",answer:"特洛伊木馬",explanation:"希臘軍把士兵藏在木馬中，特洛伊人把木馬帶進城，導致城破；比喻暗中潛入並從內部破壞的人或事物。"},
+  {question:"會議上，他滔滔不絕地講述計畫，卻被批評為（　　），缺乏可行性。",answer:"紙上談兵",explanation:"趙括只會依照兵書談論作戰，卻沒有實戰能力；比喻只會空談理論，不能解決實際問題。"},
+  {question:"總經理（　　），制定了巧妙的商業策略，帶領公司走向新的高峰。",answer:"運籌帷幄",explanation:"在軍帳中擬定作戰策略；比喻在幕後策劃、指揮全局。"},
+  {question:"他懂得（　　）的道理，除本業外，還發展了副業，增加收入來源。",answer:"狡兔三窟",explanation:"狡猾的兔子有三個洞穴以避禍；比喻人有多處安身或避禍的地方，也指多方準備退路。"},
+  {question:"敵人長途跋涉，體力必然耗盡，而我軍（　　），勝券在望。",answer:"以逸待勞",explanation:"以安逸的軍隊等待疲勞的敵軍；比喻養精蓄銳，等待對方疲憊時再行動。"}
+];
+const rounds={1:{name:"第壹篇第一單元〈帝王故事〉",questions:roundOne},2:{name:"第壹篇第二單元〈施政方法〉",questions:roundTwo},3:{name:"第壹篇第三單元〈心機手段〉",questions:roundThree},4:{name:"第壹篇第四單元〈當前局勢〉",questions:roundFour},5:{name:"第壹篇第五單元〈戰爭情勢〉",questions:roundFive},6:{name:"第壹篇第六單元〈謀略計策〉",questions:roundSix}};
 const $=s=>document.querySelector(s),board=$("#board"),scoreEl=$("#score"),progressEl=$("#progress"),timerEl=$("#timer"),timeLabel=$("#timeLabel"),questionEl=$("#question"),feedback=$("#feedback"),start=$("#start"),overlay=$("#overlay"),resultText=$("#resultText"),resultTitle=$("#resultTitle"),musicButton=$("#musicButton"),scopeText=$("#scopeText"),roundButtons=[...document.querySelectorAll(".round-button")];let deck=[],index=0,score=0,time=0,timer,playing=false,locked=false,holes=[],audioContext=null,musicTimer=null,musicStep=0,musicEnabled=true,selectedRound=2;const shuffle=a=>{const result=[...a];for(let i=result.length-1;i>0;i-=1){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result};const avoidPairing={四面楚歌:["窮途末路"],窮途末路:["四面楚歌"]};
 for(let i=0;i<9;i++){const h=document.createElement("button");h.className="hole";h.type="button";h.innerHTML='<span class="mole-wrap"><span class="answer"></span><img src="assets/guinea-pig-car-v2.png" alt="可愛的天竺鼠小車"></span>';h.addEventListener("click",()=>choose(h));board.append(h);holes.push(h)}
 function begin(){startMusic();const selected=rounds[selectedRound];deck=shuffle(selected.questions);idiomPool=selected.questions.map(item=>item.answer);index=0;score=0;time=0;playing=true;locked=false;timeLabel.textContent="挑戰秒數";overlay.classList.remove("show");start.hidden=true;feedback.textContent="";update();showQuestion();clearInterval(timer);timer=setInterval(()=>{time++;update()},1000)}
